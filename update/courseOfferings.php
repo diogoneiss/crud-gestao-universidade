@@ -29,11 +29,13 @@ $result_classrooms = mysqli_query($dbc, $query_classrooms);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Course Offering</title>
 </head>
+
 <body>
     <div class="container">
         <h2 class="mt-5">Update Course Offering</h2>
@@ -44,7 +46,8 @@ $result_classrooms = mysqli_query($dbc, $query_classrooms);
                 <label for="CourseID">Course:</label>
                 <select class="form-control" id="CourseID" name="CourseID">
                     <?php while ($row = mysqli_fetch_assoc($result_courses)) { ?>
-                        <option value="<?php echo $row['CourseID']; ?>" <?php if ($row['CourseID'] == $offering['CourseID']) echo 'selected'; ?>>
+                        <option value="<?php echo $row['CourseID']; ?>" <?php if ($row['CourseID'] == $offering['CourseID'])
+                               echo 'selected'; ?>>
                             <?php echo $row['CourseName']; ?>
                         </option>
                     <?php } ?>
@@ -55,7 +58,8 @@ $result_classrooms = mysqli_query($dbc, $query_classrooms);
                 <label for="InstructorID">Instructor:</label>
                 <select class="form-control" id="InstructorID" name="InstructorID">
                     <?php while ($row = mysqli_fetch_assoc($result_instructors)) { ?>
-                        <option value="<?php echo $row['InstructorID']; ?>" <?php if ($row['InstructorID'] == $offering['InstructorID']) echo 'selected'; ?>>
+                        <option value="<?php echo $row['InstructorID']; ?>" <?php if ($row['InstructorID'] == $offering['InstructorID'])
+                               echo 'selected'; ?>>
                             <?php echo $row['FirstName'] . ' ' . $row['LastName']; ?>
                         </option>
                     <?php } ?>
@@ -66,7 +70,8 @@ $result_classrooms = mysqli_query($dbc, $query_classrooms);
                 <label for="ClassroomID">Classroom:</label>
                 <select class="form-control" id="ClassroomID" name="ClassroomID">
                     <?php while ($row = mysqli_fetch_assoc($result_classrooms)) { ?>
-                        <option value="<?php echo $row['ClassroomID']; ?>" <?php if ($row['ClassroomID'] == $offering['ClassroomID']) echo 'selected'; ?>>
+                        <option value="<?php echo $row['ClassroomID']; ?>" <?php if ($row['ClassroomID'] == $offering['ClassroomID'])
+                               echo 'selected'; ?>>
                             <?php echo $row['Building'] . ' ' . $row['RoomNum']; ?>
                         </option>
                     <?php } ?>
@@ -75,12 +80,16 @@ $result_classrooms = mysqli_query($dbc, $query_classrooms);
 
             <div class="form-group">
                 <label for="Semester">Semester:</label>
-                <input type="text" class="form-control" id="Semester" name="Semester" value="<?php echo $offering['Semester']; ?>">
+                <select class="form-control" id="Semester" name="Semester">
+                    <option value="1" <?php echo $offering['Semester'] == 1 ? 'selected' : ''; ?>>1</option>
+                    <option value="2" <?php echo $offering['Semester'] == 2 ? 'selected' : ''; ?>>2</option>
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="Year">Year:</label>
-                <input type="number" class="form-control" id="Year" name="Year" value="<?php echo $offering['Year']; ?>">
+                <input type="number" class="form-control" id="Year" name="Year"
+                    value="<?php echo $offering['Year']; ?>">
             </div>
 
             <button type="submit" name="submit" class="btn btn-primary">Update Course Offering</button>
@@ -88,6 +97,7 @@ $result_classrooms = mysqli_query($dbc, $query_classrooms);
         </form>
     </div>
 </body>
+
 </html>
 <?php
 mysqli_free_result($result);

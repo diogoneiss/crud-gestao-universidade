@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`CourseOfferings` (
   `CourseID` INT NOT NULL,
   `InstructorID` INT NOT NULL,
   `ClassroomID` INT NOT NULL,
-  `Semester` VARCHAR(45) NOT NULL,
+  `Semester` ENUM('1', '2') NOT NULL,
   `Year` YEAR NOT NULL,
   PRIMARY KEY (`OfferingID`),
   FOREIGN KEY (`CourseID`)
@@ -90,8 +90,9 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`CourseOfferings` (
   FOREIGN KEY (`ClassroomID`)
     REFERENCES `crud_project`.`Classroom` (`ClassroomID`)
     ON UPDATE CASCADE
-    ON DELETE CASCADE)
-    AUTO_INCREMENT = 1;
+    ON DELETE CASCADE
+  )
+AUTO_INCREMENT = 1;
     
 
 -- -----------------------------------------------------
@@ -145,3 +146,15 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`Enrollments` (
     ON UPDATE CASCADE
     ON DELETE CASCADE)
     AUTO_INCREMENT = 1;
+
+
+
+
+
+
+CREATE VIEW CourseOfferingsView AS
+SELECT co.OfferingID as ID, co.Semester, co.Year, c.CourseName as CourseName, CONCAT(i.FirstName, ' ', i.LastName) as InstructorName, cl.RoomNum as ClassroomName
+FROM CourseOfferings AS co
+JOIN Course AS c ON co.CourseID = c.CourseID
+JOIN Instructor AS i ON co.InstructorID = i.InstructorID
+JOIN Classroom AS cl ON co.ClassroomID = cl.ClassroomID;

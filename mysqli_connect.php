@@ -11,11 +11,12 @@ DEFINE('DB_HOST', 'localhost');
 DEFINE('DB_NAME', 'crud_project');
 
 // Make the connection:
-$dbc = @mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-OR die('Could not connect to MySQL: ' . mysqli_error());
+$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-if(!$dbc) {
-    echo "Connection failed with error: " . mysqli_connect_error();
+// Check connection
+if (!$dbc) {
+    die("Erro de conexão, provavelmente você esqueceu de criar a tabela no MySql. Para isso, rode os scripts sql do projeto no seu banco de dados para criar e popular as tabelas com dados de teste. " . mysqli_connect_error());
 }
+
 
 ?>

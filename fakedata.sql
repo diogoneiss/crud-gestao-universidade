@@ -28,7 +28,7 @@ VALUES ('Science Hall', 101, 50), ('Science Hall', 102, 50), ('Math Building', 2
 
 -- Insert data into CourseOfferings table
 INSERT INTO CourseOfferings (CourseID, InstructorID, ClassroomID, Semester, Year)
-VALUES (1, 1, 1, 'Fall', '2023'), (2, 2, 2, 'Fall', '2023'), (3, 3, 3, 'Spring', '2024'), (4, 4, 4, 'Spring', '2024');
+VALUES (1, 1, 1, 1, '2023'), (2, 2, 2, 2, '2023'), (3, 3, 3, 2, '2024'), (4, 4, 4, 1, '2024');
 
 -- Insert data into Grade table
 INSERT INTO Grade (GradeValue, StudentID, OfferingID)
