@@ -22,7 +22,7 @@ AUTO_INCREMENT = 1;
 CREATE TABLE IF NOT EXISTS `crud_project`.`Student` (
   `StudentID` INT NOT NULL AUTO_INCREMENT,
   `EmailID` INT NOT NULL,
-   `Cpf` CHAR(11) NOT NULL,
+  `Cpf` CHAR(11) NOT NULL,
   `Major` VARCHAR(45) NOT NULL,
   `Year` YEAR NOT NULL,
   `FirstName` VARCHAR(45) NOT NULL,

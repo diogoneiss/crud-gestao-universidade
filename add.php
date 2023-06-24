@@ -249,9 +249,9 @@ mysqli_close($dbc);
             <input type="text" class="form-control" name="Email_s" id="Email_s">
         </div>
         <div class="form-group">
-        <label for="Cpf_s">CPF:</label>
-        <input type="text" class="form-control" name="Cpf_s" id="Cpf_s" onkeydown="formatCPF(event)" maxlength="14">
-    </div>
+            <label for="Cpf_s">CPF:</label>
+            <input type="text" class="form-control" name="Cpf_s" id="Cpf_s" maxlength="14">
+         </div>
         <div class="form-group">
             <label for="Major_s">Major:</label>
             <input type="text" class="form-control" name="Major_s" id="Major_s">
@@ -292,22 +292,10 @@ mysqli_close($dbc);
 
 <script>
 
-    function formatCPF(event) {
-        const cpfInput = document.getElementById("Cpf_s");
-        const cpfValue = cpfInput.value;
-
-        // prevent from entering non-digits
-        if (event.key < "0" || event.key > "9") {
-            event.preventDefault();
-        }
-        
-        // format CPF value
-        if (cpfValue.length === 3 || cpfValue.length === 7) {
-            cpfInput.value += ".";
-        } else if (cpfValue.length === 11) {
-            cpfInput.value += "-";
-        }
-    }
+$(document).ready(function () {
+      $('#Cpf_s').inputmask("999.999.999-99");
+      
+    });
 
     // hiding all table fields on page load -- had to google this, since its javascript
     document.querySelectorAll('.table-fields').forEach(function (el) {
