@@ -6,7 +6,7 @@ You need a php interpreter and MySQL
 
 ## Database setup
 
-You must first create the database and required tables/views. To do this. I provided two scripts: `tableDefinitions.sql`, `createViews`.sql and `fillTable`.sql (inserts mock data into db)
+You must first create the database and required tables/views. To do this. I provided two scripts: `tableDefinitions.sql`, `createViews.sql` and `fillTable.sql` (inserts mock data into db)
 
 ## PHP setup
 
