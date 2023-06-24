@@ -21,8 +21,8 @@ AUTO_INCREMENT = 1;
 
 CREATE TABLE IF NOT EXISTS `crud_project`.`Student` (
   `StudentID` INT NOT NULL AUTO_INCREMENT,
-  `Cpf` CHAR(11) NOT NULL,
   `EmailID` INT NOT NULL,
+   `Cpf` CHAR(11) NOT NULL,
   `Major` VARCHAR(45) NOT NULL,
   `Year` YEAR NOT NULL,
   `FirstName` VARCHAR(45) NOT NULL,
@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`Course` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `crud_project`.`Instructor` (
   `InstructorID` INT NOT NULL AUTO_INCREMENT,
-  `DepartmentID` INT NOT NULL,
   `EmailID` INT NOT NULL,
+  `DepartmentID` INT NOT NULL,
   `FirstName` VARCHAR(45) NOT NULL,
   `LastName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`InstructorID`),

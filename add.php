@@ -10,116 +10,71 @@ if (isset($_POST["submitted"])) {
     // constructing the SQL query based on the selected table; no ID fields since they are AI
     console_log($_POST);
 
-    switch ($table) {
-        case "AcademicCredits":
-            //bug: offering id is not being received from the form
+    $fields = [
+        "AcademicCredits" => ["OfferingID_ac", "Credits_ac"],
+        "Classroom" => ["BuildingID_classroom", "RoomNum_classroom", "Capacity_classroom"],
+        "Building" => ["BuildingName_b"],
+        "Course" => ["CourseName_course", "DepartmentID_course"],
+        "CourseOfferings" => ["CourseID_co", "InstructorID_co", "ClassroomID_co", "Semester_co", "Year_co"],
+        "Department" => ["DepartmentName_d"],
+        "Grade" => ["GradeValue_g", "StudentID_g", "OfferingID_g"],
+        "Instructor" => ["Email_i", "DepartmentID_i", "FirstName_i", "LastName_i"],
+        "Student" => ["Email_s", "Cpf_s", "Major_s", "Year_s", "FirstName_s", "LastName_s"],
+        "Enrollments" => ["StudentID_e", "Offering_e"],
+    ];
 
-            $offeringID = mysqli_real_escape_string(
-                $dbc,
-                $_POST["OfferingID_ac"]
-            );
-            $credits = mysqli_real_escape_string($dbc, $_POST["Credits_ac"]);
 
 
-            $query = "INSERT INTO AcademicCredits (OfferingID, Credits) VALUES ('$offeringID', $credits)";
 
-            break;
-        case "Classroom":
-            $building = mysqli_real_escape_string(
-                $dbc,
-                $_POST["Building_classroom"]
-            );
-            $roomNum = mysqli_real_escape_string(
-                $dbc,
-                $_POST["RoomNum_classroom"]
-            );
-            $capacity = mysqli_real_escape_string(
-                $dbc,
-                $_POST["Capacity_classroom"]
-            );
-            $query = "INSERT INTO Classroom (Building, RoomNum, Capacity) VALUES ('$building', $roomNum, $capacity)";
-            break;
-        case "Course":
-            $courseName = mysqli_real_escape_string(
-                $dbc,
-                $_POST["CourseName_course"]
-            );
-            $departmentID = mysqli_real_escape_string(
-                $dbc,
-                $_POST["DepartmentID_course"]
-            );
-
-            $query = "INSERT INTO Course (CourseName, DepartmentID) VALUES ('$courseName', $departmentID)";
-
-            break;
-        case "CourseOfferings":
-            $courseID = mysqli_real_escape_string($dbc, $_POST["CourseID_co"]);
-            $instructorID = mysqli_real_escape_string(
-                $dbc,
-                $_POST["InstructorID_co"]
-            );
-            $classroomID = mysqli_real_escape_string(
-                $dbc,
-                $_POST["ClassroomID_co"]
-            );
-            $semester = mysqli_real_escape_string($dbc, $_POST["Semester_co"]);
-            $year = mysqli_real_escape_string($dbc, $_POST["Year_co"]);
-
-            $query = "INSERT INTO CourseOfferings (CourseID, InstructorID, ClassroomID, Semester, Year) VALUES ($courseID, $instructorID, $classroomID, '$semester', $year)";
-
-            break;
-        case "Department":
-            $departmentName = mysqli_real_escape_string(
-                $dbc,
-                $_POST["DepartmentName_d"]
-            );
-            $query = "INSERT INTO Department (DepartmentName) VALUES ('$departmentName')";
-            break;
-        case "Grade":
-            $gradevalue = mysqli_real_escape_string(
-                $dbc,
-                $_POST["GradeValue_g"]
-            );
-            $studentID = $_POST["StudentID"];
-            $offeringID = mysqli_real_escape_string(
-                $dbc,
-                $_POST["OfferingID_g"]
-            );
-
-            $query = "INSERT INTO Grade (GradeValue, StudentID, OfferingID) VALUES ('$gradevalue', $studentID, $offeringID)";
-
-            break;
-        case "Instructor":
-            $departmentID = mysqli_real_escape_string(
-                $dbc,
-                $_POST["DepartmentID_i"]
-            );
-            $email = mysqli_real_escape_string($dbc, $_POST["Email_i"]);
-            $firstName = mysqli_real_escape_string($dbc, $_POST["FirstName_i"]);
-            $lastName = mysqli_real_escape_string($dbc, $_POST["LastName_i"]);
-            $query = "INSERT INTO Instructor (DepartmentID, Email, FirstName, LastName) VALUES ($departmentID, '$email', '$firstName', '$lastName')";
-
-            break;
-        case "Student":
-
-            //todo: clean up cpf from input, leaving just numbers
-
-            $email = mysqli_real_escape_string($dbc, $_POST["Email_s"]);
-            $major = mysqli_real_escape_string($dbc, $_POST["Major_s"]);
-            $year = mysqli_real_escape_string($dbc, $_POST["Year_s"]);
-            $firstName = mysqli_real_escape_string($dbc, $_POST["FirstName_s"]);
-            $lastName = mysqli_real_escape_string($dbc, $_POST["LastName_s"]);
-            $query = "INSERT INTO Student (Email, Major, Year, FirstName, LastName) VALUES ('$email', '$major', $year, '$firstName', '$lastName')";
-            break;
-        case "Enrollments":
-            $studentID = mysqli_real_escape_string($dbc, $_POST["StudentID_e"]);
-            $offeringID = mysqli_real_escape_string($dbc, $_POST["Offering_e"]);
-            $query = "INSERT INTO Enrollments (StudentID, OfferingID) VALUES ($studentID, $offeringID)";
-            break;
-        default:
-            echo "<p>Invalid table selected.</p>";
-            break;
+    if (!array_key_exists($table, $fields)) {
+        echo "<p>Invalid table selected.</p>";
+        return;
     }
+    // We need the columns for the given table to implement the insertion correctly
+    $columnQuery = "SHOW COLUMNS FROM $table";
+    $columnResult = mysqli_query($dbc, $columnQuery);
+    $columns = [];
+
+    while($row = mysqli_fetch_assoc($columnResult)) {
+        if($row['Extra'] != 'auto_increment') {
+            $columns[] = $row['Field'];
+        }
+    }
+
+    $values = [];
+
+    //remove dots and dashes from CPF
+    if(isset($_POST["Cpf_s"])) {
+        $cpf = str_replace(['.', '-'], '', $_POST["Cpf_s"]); 
+        $_POST["Cpf_s"] = $cpf;
+    }
+
+    if ($table == "Instructor" || $table == "Student") {
+        // strtolower(substr($table, 0, 1)) gives either "i" or "s" depending on the table
+        $email = mysqli_real_escape_string($dbc, $_POST["Email_" . strtolower(substr($table, 0, 1))]);
+        $emailQuery = "INSERT INTO Emails (EmailAddress) VALUES ('$email')";
+        console_log("Email query is: ". $emailQuery);
+        mysqli_query($dbc, $emailQuery);
+        $emailID = mysqli_insert_id($dbc);
+        console_log("Last added email is: ". $emailID);
+        $values[] = $emailID;
+    }
+
+    foreach ($fields[$table] as $field) {
+        // Skip Email field as we have already handled it
+        if (($table == "Instructor" || $table == "Student") && $field == "Email_" . strtolower(substr($table, 0, 1))) {
+            continue;
+        }
+        $value = mysqli_real_escape_string($dbc, $_POST[$field]);
+        if (!is_numeric($value)) {
+            $value = "'$value'"; // Enclose non-numeric values in quotes for the SQL query
+        }
+        $values[] = $value;
+    }
+
+    $query = "INSERT INTO $table (" . implode(", ", $columns) . ") VALUES (" . implode(", ", $values) . ")";
+
+    console_log($query);
 
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
@@ -177,8 +132,8 @@ mysqli_close($dbc);
     <div id="Classroom" class="table-fields">
         <p><strong>Table: Classroom</strong></p>
         <div class="form-group">
-            <label for="Building_classroom">Building:</label>
-            <input type="text" class="form-control" name="Building_classroom" id="Building_classroom">
+            <label for="BuildingID_classroom">BuildingID:</label>
+            <input type="text" class="form-control" name="BuildingID_classroom" id="BuildingID_classroom">
         </div>
         <div class="form-group">
             <label for="RoomNum_classroom">RoomNum:</label>
@@ -261,7 +216,7 @@ mysqli_close($dbc);
         </div>
         <div class="form-group">
             <label for="Offering_g">OfferingID:</label>
-            <input type="text" class="form-control" name="Offering_g" id="Offering_g">
+            <input type="text" class="form-control" name="OfferingID_g" id="OfferingID_g">
         </div>
     </div>
 
@@ -293,6 +248,10 @@ mysqli_close($dbc);
             <label for="Email_s">Email:</label>
             <input type="text" class="form-control" name="Email_s" id="Email_s">
         </div>
+        <div class="form-group">
+        <label for="Cpf_s">CPF:</label>
+        <input type="text" class="form-control" name="Cpf_s" id="Cpf_s" onkeydown="formatCPF(event)" maxlength="14">
+    </div>
         <div class="form-group">
             <label for="Major_s">Major:</label>
             <input type="text" class="form-control" name="Major_s" id="Major_s">
@@ -332,6 +291,23 @@ mysqli_close($dbc);
 </form>
 
 <script>
+
+    function formatCPF(event) {
+        const cpfInput = document.getElementById("Cpf_s");
+        const cpfValue = cpfInput.value;
+
+        // prevent from entering non-digits
+        if (event.key < "0" || event.key > "9") {
+            event.preventDefault();
+        }
+        
+        // format CPF value
+        if (cpfValue.length === 3 || cpfValue.length === 7) {
+            cpfInput.value += ".";
+        } else if (cpfValue.length === 11) {
+            cpfInput.value += "-";
+        }
+    }
 
     // hiding all table fields on page load -- had to google this, since its javascript
     document.querySelectorAll('.table-fields').forEach(function (el) {
