@@ -1,5 +1,20 @@
 CREATE DATABASE IF NOT EXISTS crud_project;
 
+USE `crud_project`;
+-- -----------------------------------------------------
+-- Table `crud_project`.`Emails`
+-- We need this table to store email addresses for students and instructors, 
+-- so that we can enforce the UNIQUE constraint on the EmailAddress column.
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `crud_project`.`Emails` (
+  `EmailID` INT NOT NULL AUTO_INCREMENT,
+  `EmailAddress` VARCHAR(45) NOT NULL UNIQUE,
+  PRIMARY KEY (`EmailID`))
+AUTO_INCREMENT = 1;
+
+
 -- -----------------------------------------------------
 -- Table `crud_project`.`Student`
 -- -----------------------------------------------------
@@ -7,13 +22,16 @@ CREATE DATABASE IF NOT EXISTS crud_project;
 CREATE TABLE IF NOT EXISTS `crud_project`.`Student` (
   `StudentID` INT NOT NULL AUTO_INCREMENT,
   `Cpf` CHAR(11) NOT NULL,
-  `Email` VARCHAR(45) NOT NULL,
+  `EmailID` INT NOT NULL,
   `Major` VARCHAR(45) NOT NULL,
   `Year` YEAR NOT NULL,
   `FirstName` VARCHAR(45) NOT NULL,
   `LastName` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`StudentID`))
-  AUTO_INCREMENT = 1;
+  PRIMARY KEY (`StudentID`),
+  FOREIGN KEY (`EmailID`)
+    REFERENCES `crud_project`.`Emails` (`EmailID`))
+AUTO_INCREMENT = 1;
+
 
 
 -- -----------------------------------------------------
@@ -46,19 +64,18 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`Course` (
 CREATE TABLE IF NOT EXISTS `crud_project`.`Instructor` (
   `InstructorID` INT NOT NULL AUTO_INCREMENT,
   `DepartmentID` INT NOT NULL,
-  `Email` VARCHAR(45) NOT NULL,
+  `EmailID` INT NOT NULL,
   `FirstName` VARCHAR(45) NOT NULL,
   `LastName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`InstructorID`),
   FOREIGN KEY (`DepartmentID`)
     REFERENCES `crud_project`.`Department` (`DepartmentID`)
     ON UPDATE CASCADE
-    ON DELETE CASCADE)
-  AUTO_INCREMENT = 1;
-
-
-
-
+    ON DELETE CASCADE,
+  FOREIGN KEY (`EmailID`)
+    REFERENCES `crud_project`.`Emails` (`EmailID`)
+)
+AUTO_INCREMENT = 1;
 
 -- -----------------------------------------------------
 -- Table `crud_project`.`Building`
@@ -115,7 +132,7 @@ AUTO_INCREMENT = 1;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `crud_project`.`Grade` (
   `GradeID` INT NOT NULL AUTO_INCREMENT,
-  `GradeValue` VARCHAR(5) NOT NULL,
+  `GradeValue` DECIMAL(5,2) NOT NULL,
   `StudentID` INT NOT NULL,
   `OfferingID` INT NOT NULL,
   PRIMARY KEY (`GradeID`),
@@ -128,6 +145,32 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`Grade` (
     ON UPDATE CASCADE
     ON DELETE CASCADE)
     AUTO_INCREMENT = 1;
+
+-- -----------------------------------------------------
+-- Domain trigger for `crud_project`.`Grade`
+-- -----------------------------------------------------
+
+
+DELIMITER //
+CREATE TRIGGER GradeValueCheckBeforeInsert BEFORE INSERT ON `crud_project`.`Grade`
+FOR EACH ROW
+BEGIN
+  IF NEW.GradeValue < 0 OR NEW.GradeValue > 100 THEN 
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'GradeValue must be between 0 and 100';
+  END IF;
+END;//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER GradeValueCheckBeforeUpdate BEFORE UPDATE ON `crud_project`.`Grade`
+FOR EACH ROW
+BEGIN
+  IF NEW.GradeValue < 0 OR NEW.GradeValue > 100 THEN 
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'GradeValue must be between 0 and 100';
+  END IF;
+END;//
+DELIMITER ;
+
 
 
 -- -----------------------------------------------------

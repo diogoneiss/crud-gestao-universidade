@@ -12,8 +12,9 @@ JOIN `crud_project`.`Building` AS b ON cl.BuildingID = b.BuildingID;
 DROP VIEW IF EXISTS `crud_project`.`StudentView`;
 
 CREATE VIEW `crud_project`.`StudentView` AS
-SELECT s.StudentID, s.Cpf, s.Email, s.Major, s.Year, CONCAT(s.FirstName, ' ', s.LastName) AS StudentName
-FROM `crud_project`.`Student` AS s;
+SELECT s.StudentID, s.Cpf, e.EmailAddress, s.Major, s.Year, CONCAT(s.FirstName, ' ', s.LastName) AS StudentName
+FROM `crud_project`.`Student` AS s
+JOIN `crud_project`.`Emails` AS e ON s.EmailID = e.EmailID;
 
 
 DROP VIEW IF EXISTS `crud_project`.`CourseView`;
@@ -27,9 +28,10 @@ JOIN `crud_project`.`Department` AS d ON c.DepartmentID = d.DepartmentID;
 DROP VIEW IF EXISTS `crud_project`.`InstructorView`;
 
 CREATE VIEW `crud_project`.`InstructorView` AS
-SELECT i.InstructorID as InstructorID, CONCAT(i.FirstName, ' ', i.LastName) as InstructorName, i.Email, d.DepartmentName
+SELECT i.InstructorID as InstructorID, CONCAT(i.FirstName, ' ', i.LastName) as InstructorName, e.EmailAddress, d.DepartmentName
 FROM `crud_project`.`Instructor` AS i
-JOIN `crud_project`.`Department` AS d ON i.DepartmentID = d.DepartmentID;
+JOIN `crud_project`.`Department` AS d ON i.DepartmentID = d.DepartmentID
+JOIN `crud_project`.`Emails` AS e ON i.EmailID = e.EmailID;
 
 
 DROP VIEW IF EXISTS `crud_project`.`ClassroomView`;
