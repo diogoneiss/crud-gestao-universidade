@@ -17,7 +17,7 @@
     {
         $exceptions = ['Department', 'Building'];
         if (in_array($table, $exceptions)) {
-            // These tables do not have a view, so return the table name
+            // These tables do not have a view, so return just the table name
             return $table;
         } else {
             // All other tables have a corresponding view, so append "View" to the table name
@@ -38,6 +38,7 @@
                     <input name="query" size="50" class="form-control mr-2">
                     <select name="table" class="custom-select mr-2">
                         <option value="AcademicCredits">Academic Credits</option>
+                        <option value="Building">Building</option>
                         <option value="Classroom">Classroom</option>
                         <option value="Course">Course</option>
                         <option value="CourseOfferings">Course Offerings</option>
@@ -56,8 +57,6 @@
         // different queries according to selection
         $query = null;
 
-        // todo: inverter esse if, para que o select base seja padrão para a consulta de dada tabela, mas se existir uma query, o where é adicionado no sql
-        
         if (empty($_POST['table'])) {
             return;
         }
@@ -78,9 +77,9 @@
                 'Department' => ['DepartmentID', 'DepartmentName'],
                 'Building' => ['BuildingID', 'BuildingName'],
                 'CourseOfferingsView' => ['OfferingID', 'Semester', 'Year', 'CourseName', 'InstructorName', 'ClassroomName', 'DepartmentName', 'BuildingName'],
-                'StudentView' => ['StudentID', 'Cpf', 'Email', 'Major', 'Year', 'StudentName'],
+                'StudentView' => ['StudentID', 'Cpf', 'EmailAddress', 'Major', 'Year', 'StudentName'],
                 'CourseView' => ['CourseID', 'CourseName', 'DepartmentName'],
-                'InstructorView' => ['InstructorID', 'InstructorName', 'Email', 'DepartmentName'],
+                'InstructorView' => ['InstructorID', 'InstructorName', 'EmailAddress', 'DepartmentName'],
                 'ClassroomView' => ['ClassroomID', 'BuildingName', 'RoomNum', 'Capacity'],
                 'GradeView' => ['GradeID', 'GradeValue', 'StudentID', 'StudentName', 'OfferingID', 'CourseName', 'InstructorName', 'DepartmentName'],
                 'AcademicCreditsView' => ['CreditID', 'Credits', 'OfferingID', 'CourseName', 'InstructorName', 'DepartmentName'],
