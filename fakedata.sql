@@ -5,11 +5,12 @@ INSERT INTO Department (DepartmentName)
 VALUES ('Computer Science'), ('Mathematics'), ('Physics'), ('Chemistry');
 
 -- Insert data into Student table
-INSERT INTO Student (Email, Major, Year, FirstName, LastName)
-VALUES ('john.doe@example.com', 'Computer Science', '2024', 'John', 'Doe'),
-       ('jane.smith@example.com', 'Mathematics', '2023', 'Jane', 'Smith'),
-       ('michael.brown@example.com', 'Physics', '2022', 'Michael', 'Brown'),
-       ('sarah.jones@example.com', 'Chemistry', '2025', 'Sarah', 'Jones');
+INSERT INTO Student (Cpf, Email, Major, Year, FirstName, LastName)
+VALUES ('12345678901', 'john.doe@example.com', 'Computer Science', '2024', 'John', 'Doe'),
+       ('23456789012', 'jane.smith@example.com', 'Mathematics', '2023', 'Jane', 'Smith'),
+       ('34567890123', 'michael.brown@example.com', 'Physics', '2022', 'Michael', 'Brown'),
+       ('45678901234', 'sarah.jones@example.com', 'Chemistry', '2025', 'Sarah', 'Jones');
+
 
 -- Insert data into Course table
 INSERT INTO Course (CourseName, DepartmentID)
@@ -22,9 +23,13 @@ VALUES (1, 'prof.miller@example.com', 'Alice', 'Miller'),
        (3, 'prof.garcia@example.com', 'Charlie', 'Garcia'),
        (4, 'prof.wilson@example.com', 'David', 'Wilson');
 
+-- Insert data into Building table
+INSERT INTO Building (BuildingName)
+VALUES ('Science Hall'), ('Math Building');
+
 -- Insert data into Classroom table
-INSERT INTO Classroom (Building, RoomNum, Capacity)
-VALUES ('Science Hall', 101, 50), ('Science Hall', 102, 50), ('Math Building', 201, 30), ('Math Building', 202, 30);
+INSERT INTO Classroom (BuildingID, RoomNum, Capacity)
+VALUES (1, 101, 50), (1, 102, 50), (2, 201, 30), (2, 202, 30);
 
 -- Insert data into CourseOfferings table
 INSERT INTO CourseOfferings (CourseID, InstructorID, ClassroomID, Semester, Year)

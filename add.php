@@ -101,6 +101,9 @@ if (isset($_POST["submitted"])) {
 
             break;
         case "Student":
+
+            //todo: clean up cpf from input, leaving just numbers
+
             $email = mysqli_real_escape_string($dbc, $_POST["Email_s"]);
             $major = mysqli_real_escape_string($dbc, $_POST["Major_s"]);
             $year = mysqli_real_escape_string($dbc, $_POST["Year_s"]);

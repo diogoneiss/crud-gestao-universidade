@@ -6,6 +6,7 @@ CREATE DATABASE IF NOT EXISTS crud_project;
 
 CREATE TABLE IF NOT EXISTS `crud_project`.`Student` (
   `StudentID` INT NOT NULL AUTO_INCREMENT,
+  `Cpf` CHAR(11) NOT NULL,
   `Email` VARCHAR(45) NOT NULL,
   `Major` VARCHAR(45) NOT NULL,
   `Year` YEAR NOT NULL,
@@ -13,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`Student` (
   `LastName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`StudentID`))
   AUTO_INCREMENT = 1;
+
 
 -- -----------------------------------------------------
 -- Table `crud_project`.`Department`
@@ -56,15 +58,28 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`Instructor` (
 
 
 
+
+
 -- -----------------------------------------------------
--- Table `crud_project`.`Classroom`
+-- Table `crud_project`.`Building`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `crud_project`.`Classroom` (
+
+CREATE TABLE IF NOT EXISTS `crud_project`.`Building` (
+  `BuildingID` INT NOT NULL AUTO_INCREMENT,
+  `BuildingName` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`BuildingID`))
+  AUTO_INCREMENT = 1;
+
+  CREATE TABLE IF NOT EXISTS `crud_project`.`Classroom` (
   `ClassroomID` INT NOT NULL AUTO_INCREMENT,
-  `Building` VARCHAR(45) NOT NULL,
+  `BuildingID` INT NOT NULL,
   `RoomNum` INT NOT NULL,
   `Capacity` INT NOT NULL,
-  PRIMARY KEY (`ClassroomID`))
+  PRIMARY KEY (`ClassroomID`),
+  FOREIGN KEY (`BuildingID`)
+    REFERENCES `crud_project`.`Building` (`BuildingID`)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT)
   AUTO_INCREMENT = 1;
 
 
@@ -146,15 +161,3 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`Enrollments` (
     ON UPDATE CASCADE
     ON DELETE CASCADE)
     AUTO_INCREMENT = 1;
-
-
-
-
-
-
-CREATE VIEW CourseOfferingsView AS
-SELECT co.OfferingID as ID, co.Semester, co.Year, c.CourseName as CourseName, CONCAT(i.FirstName, ' ', i.LastName) as InstructorName, cl.RoomNum as ClassroomName
-FROM CourseOfferings AS co
-JOIN Course AS c ON co.CourseID = c.CourseID
-JOIN Instructor AS i ON co.InstructorID = i.InstructorID
-JOIN Classroom AS cl ON co.ClassroomID = cl.ClassroomID;
