@@ -19,7 +19,7 @@ $query_students = "SELECT * FROM Student";
 $result_students = mysqli_query($dbc, $query_students);
 
 // Query to get all the course offerings
-$query_offerings = "SELECT * FROM CourseOfferings";
+$query_offerings = "SELECT * FROM CourseOfferingsView";
 $result_offerings = mysqli_query($dbc, $query_offerings);
 
 ?>
@@ -57,7 +57,7 @@ $result_offerings = mysqli_query($dbc, $query_offerings);
                 <select class="form-control" id="OfferingID" name="OfferingID">
                     <?php while ($row = mysqli_fetch_assoc($result_offerings)) { ?>
                         <option value="<?php echo $row['OfferingID']; ?>" <?php if ($row['OfferingID'] == $grade['OfferingID']) echo 'selected'; ?>>
-                            <?php echo $row['CourseID'] . ' ' . $row['Semester'] . ' ' . $row['Year']; ?>
+                        <?php echo $row['CourseName'] . ' / ' . $row['InstructorName']. ', semester ' . $row['Semester'] . ' of ' . $row['Year']; ?>
                         </option>
                     <?php } ?>
                 </select>

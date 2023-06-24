@@ -4,6 +4,7 @@ include ("../header.html");
 // Database connection
 require_once('../mysqli_connect.php');
 require_once('../log.php');
+
 // Fetch the record with the given id
 $id = $_GET['id'];
 $sql = "SELECT * FROM Instructor WHERE InstructorID = ?";
@@ -15,6 +16,22 @@ $record = $result->fetch_assoc();
 
 // Close the statement
 $stmt->close();
+
+//Fetch the email
+$emailID = $record['EmailID'];
+$emailID = mysqli_real_escape_string($dbc, $emailID);
+
+$emailSql = "SELECT * FROM Emails WHERE EmailID = ?";
+$stmt = $dbc->prepare($emailSql);
+$stmt->bind_param("i", $emailID);
+console_log("Email id for student " . $id . " is " . $emailID);
+
+$stmt->execute();
+$result = $stmt->get_result();
+$email = $result->fetch_assoc();
+
+$stmt->close();
+
 
 // Fetch all departments for the dropdown
 $sql_departments = "SELECT * FROM Department";
@@ -39,7 +56,7 @@ $departments = $dbc->query($sql_departments);
       
       <div class="form-group">
         <label for="Email">Email:</label>
-        <input type="email" class="form-control" name="Email" id="Email" value="<?php echo $record['Email']; ?>" required>
+        <input type="email" class="form-control" name="Email" id="Email" value="<?php echo $email['EmailAddress']; ?>" required>
       </div>
       
       <div class="form-group">

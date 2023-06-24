@@ -23,7 +23,7 @@ $query_instructors = "SELECT * FROM Instructor";
 $result_instructors = mysqli_query($dbc, $query_instructors);
 
 // Query to get all the classrooms
-$query_classrooms = "SELECT * FROM Classroom";
+$query_classrooms = "SELECT * FROM Classroom JOIN Building ON Classroom.BuildingID = Building.BuildingID";
 $result_classrooms = mysqli_query($dbc, $query_classrooms);
 
 ?>
@@ -72,7 +72,7 @@ $result_classrooms = mysqli_query($dbc, $query_classrooms);
                     <?php while ($row = mysqli_fetch_assoc($result_classrooms)) { ?>
                         <option value="<?php echo $row['ClassroomID']; ?>" <?php if ($row['ClassroomID'] == $offering['ClassroomID'])
                                echo 'selected'; ?>>
-                            <?php echo $row['Building'] . ' ' . $row['RoomNum']; ?>
+                            <?php echo $row['BuildingName'] . ' ' . $row['RoomNum']; ?>
                         </option>
                     <?php } ?>
                 </select>

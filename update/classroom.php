@@ -14,14 +14,12 @@ $stmt->execute();
 $result = $stmt->get_result();
 $classroom = $result->fetch_assoc();
 
+// Fetch all buildings for the dropdown
+$sql_buildings = "SELECT * FROM Building";
+$buildings_result = $dbc->query($sql_buildings);
+
+
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Classroom</title>
-</head>
 <body>
     <div class="container">
         <h2 class="mt-5">Update Classroom</h2>
@@ -30,7 +28,17 @@ $classroom = $result->fetch_assoc();
 
             <div class="form-group">
                 <label for="Building">Building:</label>
-                <input type="text" class="form-control" id="Building" name="Building" value="<?php echo $classroom['Building']; ?>">
+                <select name="Building" id="Building" class="form-control">
+                  <?php
+                  while ($building = $buildings_result->fetch_assoc()) {
+                    $selected = '';
+                    if ($building['BuildingName'] == $classroom['Building']) {
+                        $selected = 'selected';
+                    }
+                    echo "<option value='".$building['BuildingName']."' ".$selected.">".$building['BuildingName']."</option>";
+                  }
+                  ?>
+                </select>
             </div>
 
             <div class="form-group">
@@ -48,7 +56,6 @@ $classroom = $result->fetch_assoc();
         </form>
     </div>
 </body>
-</html>
 <?php
 mysqli_free_result($result);
 $dbc->close();
