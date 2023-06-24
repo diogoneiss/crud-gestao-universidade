@@ -33,23 +33,31 @@
             <!-- Wrap the form and the button inside another div -->
             <div>
                 <!-- creating a form to search the database and adding a drop-down menu -->
-                <form action="index.php" method="post" class="form-inline">
+                <form action="index.php" method="post" class="form-inline" id="searchForm">
                     <label for="query" class="mr-2">Search:</label>
-                    <input name="query" size="50" class="form-control mr-2">
-                    <select name="table" class="custom-select mr-2">
-                        <option value="AcademicCredits">Academic Credits</option>
-                        <option value="Building">Building</option>
-                        <option value="Classroom">Classroom</option>
-                        <option value="Course">Course</option>
-                        <option value="CourseOfferings">Course Offerings</option>
-                        <option value="Department">Department</option>
-                        <option value="Enrollments">Enrollments</option>
-                        <option value="Grade">Grade</option>
-                        <option value="Instructor">Instructor</option>
-                        <option value="Student">Student</option>
+                    <input name="query" size="50" class="form-control mr-2" id="query">
+                    <select name="table" class="custom-select mr-2" id="table" onchange="submitForm()">
+                        <option value="AcademicCredits" <?= ($_POST['table'] ?? '') === 'AcademicCredits' ? 'selected' : ''; ?>>Academic Credits</option>
+                        <option value="Building" <?= ($_POST['table'] ?? '') === 'Building' ? 'selected' : ''; ?>>Building
+                        </option>
+                        <option value="Classroom" <?= ($_POST['table'] ?? '') === 'Classroom' ? 'selected' : ''; ?>>
+                            Classroom</option>
+                        <option value="Course" <?= ($_POST['table'] ?? '') === 'Course' ? 'selected' : ''; ?>>Course
+                        </option>
+                        <option value="CourseOfferings" <?= ($_POST['table'] ?? '') === 'CourseOfferings' ? 'selected' : ''; ?>>Course Offerings</option>
+                        <option value="Department" <?= ($_POST['table'] ?? '') === 'Department' ? 'selected' : ''; ?>>
+                            Department</option>
+                        <option value="Enrollments" <?= ($_POST['table'] ?? '') === 'Enrollments' ? 'selected' : ''; ?>>
+                            Enrollments</option>
+                        <option value="Grade" <?= ($_POST['table'] ?? '') === 'Grade' ? 'selected' : ''; ?>>Grade</option>
+                        <option value="Instructor" <?= ($_POST['table'] ?? '') === 'Instructor' ? 'selected' : ''; ?>>
+                            Instructor</option>
+                        <option value="Student" <?= ($_POST['table'] ?? '') === 'Student' ? 'selected' : ''; ?>>Student
+                        </option>
                     </select>
                     <input type="submit" value="search" class="btn btn-primary">
                 </form>
+
                 <p><a href="add.php" class="btn btn-primary mt-3">Add a new record</a></p>
             </div>
         </div>
@@ -60,6 +68,8 @@
         if (empty($_POST['table'])) {
             return;
         }
+
+        console_log($_POST['table']);
 
         $table = mysqli_real_escape_string($dbc, strip_tags($_POST['table']));
 
@@ -161,6 +171,14 @@
         ?>
 
     </div>
+
+    <script>
+        function submitForm() {
+            if(document.getElementById("query").value === "") {
+                document.getElementById("searchForm").submit();
+            }
+        }
+    </script>
 </body>
 
 </html>
