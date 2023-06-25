@@ -103,6 +103,7 @@ mysqli_close($dbc);
         <label for="tableSelect">Select table:</label>
         <select name="table" class="form-control" id="tableSelect">
             <option selected value="AcademicCredits">Academic Credits</option>
+            <option value="Building">Building</option>
             <option value="Classroom">Classroom</option>
             <option value="Course">Course</option>
             <option value="CourseOfferings">Course Offerings</option>
@@ -127,10 +128,18 @@ mysqli_close($dbc);
             <input type="number" class="form-control" name="Credits_ac" id="Credits_ac">
         </div>
     </div>
-
+    <!-- Fields for Building table -->
+    <div id="Building" class="table-fields">
+        <p><strong>Table: Building</strong></p>
+        <div class="form-group">
+            <label for="BuildingName_b">Building name:</label>
+            <input type="text" class="form-control" name="BuildingName_b" id="BuildingName_b">
+        </div>
+    </div>
     <!-- Fields for Classroom table -->
     <div id="Classroom" class="table-fields">
         <p><strong>Table: Classroom</strong></p>
+        <p>Please refer to the Buildings table for the correct BuildingID.</p>
         <div class="form-group">
             <label for="BuildingID_classroom">BuildingID:</label>
             <input type="text" class="form-control" name="BuildingID_classroom" id="BuildingID_classroom">

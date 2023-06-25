@@ -15,7 +15,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
 // Check connection
 if (!$dbc) {
-    die("Erro de conexão, provavelmente você esqueceu de criar a tabela no MySql. Para isso, rode os scripts sql do projeto no seu banco de dados para criar e popular as tabelas com dados de teste. " . mysqli_connect_error());
+    die("Connection error, you probably forgot to setup the MySQL database. Check the info in the README.md file." . mysqli_connect_error());
 }
 
 
