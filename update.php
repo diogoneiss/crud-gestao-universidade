@@ -11,7 +11,10 @@ if ($table == 'Student') {
   header("Location: update/instructor.php?id=$id");
 } elseif ($table == 'AcademicCredits') {
   header("Location: update/academicCredits.php?id=$id");
-} elseif ($table == 'Classroom') {
+} elseif ($table == 'Building') {
+  header("Location: update/building.php?id=$id");
+}
+elseif ($table == 'Classroom') {
   header("Location: update/classroom.php?id=$id");
 } elseif ($table == 'Course') {
   header("Location: update/course.php?id=$id");

@@ -1,9 +1,9 @@
 <html>
-
-<body>
-
-    <?php
+<?php
     include("header.html");
+?>
+    <?php
+
     require_once('./log.php');
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
