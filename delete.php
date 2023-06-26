@@ -28,5 +28,5 @@ mysqli_close($dbc);
 ?>
 
 <div class="container mt-3">
-    <a href="index.php" class="btn btn-primary">Go back to the index page</a>
+    <a href="index.php" class="btn btn-primary">Voltar para página inicial</a>
 </div>

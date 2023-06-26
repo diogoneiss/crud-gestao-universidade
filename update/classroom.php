@@ -51,8 +51,8 @@ $buildings_result = $dbc->query($sql_buildings);
                 <input type="number" class="form-control" id="Capacity" name="Capacity" value="<?php echo $classroom['Capacity']; ?>">
             </div>
 
-            <button type="submit" name="submit" class="btn btn-primary">Update Classroom</button>
-            <a href="index.php" class="btn btn-secondary">Cancel</a>
+            <button type="submit" name="submit" class="btn btn-primary">Atualizar Sala</button>
+            <a href="index.php" class="btn btn-secondary">Cancela</a>
         </form>
     </div>
 </body>

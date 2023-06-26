@@ -48,8 +48,8 @@ $result_offerings = mysqli_query($dbc, $query_offerings);
                 </select>
             </div>
 
-            <button type="submit" name="submit" class="btn btn-primary">Update Academic Credit</button>
-            <a href="index.php" class="btn btn-secondary">Cancel</a>
+            <button type="submit" name="submit" class="btn btn-primary">Atualizar Créditos Acadêmicos</button>
+            <a href="index.php" class="btn btn-secondary">Cancela</a>
         </form>
     </div>
 </body>

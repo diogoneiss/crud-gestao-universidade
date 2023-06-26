@@ -69,7 +69,7 @@ $departments = $dbc->query($sql_departments);
         <input type="text" class="form-control" name="LastName" id="LastName" value="<?php echo $record['LastName']; ?>" required>
       </div>
 
-      <button type="submit" class="btn btn-primary" name="submit">Update Instructor</button>
+      <button type="submit" class="btn btn-primary" name="submit">Atualizar Professor</button>
     </form>
   </div>
 </body>

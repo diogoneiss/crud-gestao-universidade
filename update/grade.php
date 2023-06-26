@@ -63,8 +63,8 @@ $result_offerings = mysqli_query($dbc, $query_offerings);
                 </select>
             </div>
 
-            <button type="submit" name="submit" class="btn btn-primary">Update Grade</button>
-            <a href="index.php" class="btn btn-secondary">Cancel</a>
+            <button type="submit" name="submit" class="btn btn-primary">Atalulizar Notas</button>
+            <a href="index.php" class="btn btn-secondary">Cancela</a>
         </form>
     </div>
 </body>

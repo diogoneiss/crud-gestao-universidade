@@ -1,16 +1,30 @@
 <?php
-require_once('mysqli_connect.php');
-$id = mysqli_real_escape_string($dbc, $_POST['id']);
-$title = mysqli_real_escape_string($dbc, $_POST['title']);
-$url = mysqli_real_escape_string($dbc, $_POST['url']);
-$comment = mysqli_real_escape_string($dbc, $_POST['comment']);
-$query = "UPDATE bookmark SET title='$title', url='$url', comment='$comment' WHERE id=$id";
-$result = @mysqli_query($dbc, $query);
-if ($result) {
-    echo "<p><b>The selected record has been updated.</b></p>";
-    echo "<a href=index.php>Home</a>";
+// update.php
+
+$id = $_GET['id'];
+$table = $_GET['table'];
+
+// Determine the appropriate update page based on the table name
+if ($table == 'Student') {
+  header("Location: update/student.php?id=$id");
+} elseif ($table == 'Instructor') {
+  header("Location: update/instructor.php?id=$id");
+} elseif ($table == 'AcademicCredits') {
+  header("Location: update/academicCredits.php?id=$id");
+} elseif ($table == 'Classroom') {
+  header("Location: update/classroom.php?id=$id");
+} elseif ($table == 'Course') {
+  header("Location: update/course.php?id=$id");
+} elseif ($table == 'CourseOfferings') {
+  header("Location: update/courseOfferings.php?id=$id");
+} elseif ($table == 'Department') {
+  header("Location: update/department.php?id=$id");
+} elseif ($table == 'Enrollments') {
+  header("Location: update/enrollments.php?id=$id");
+} elseif ($table == 'Grade') {
+  header("Location: update/grade.php?id=$id");
 } else {
-    echo "<p>The record could not be updated due to a system error" . mysqli_error($dbc) . "</p>";
+  // Handle other table names or invalid table names
+  echo "Invalid table name.";
 }
-mysqli_close($dbc);
 ?>

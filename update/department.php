@@ -33,8 +33,8 @@ $department = $result->fetch_assoc();
                 <input type="text" class="form-control" name="DepartmentName" id="DepartmentName" value="<?php echo $department['DepartmentName']; ?>" required>
             </div>
 
-            <button type="submit" name="submit" class="btn btn-primary">Update Department</button>
-            <a href="index.php" class="btn btn-secondary">Cancel</a>
+            <button type="submit" name="submit" class="btn btn-primary">Atualizar Departamento</button>
+            <a href="index.php" class="btn btn-secondary">Cancela</a>
         </form>
     </div>
 </body>

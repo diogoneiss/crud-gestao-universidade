@@ -34,31 +34,31 @@
             <div>
                 <!-- creating a form to search the database and adding a drop-down menu -->
                 <form action="index.php" method="post" class="form-inline" id="searchForm">
-                    <label for="query" class="mr-2">Search:</label>
+                    <label for="query" class="mr-2">Pesquisa:</label>
                     <input name="query" size="50" class="form-control mr-2" id="query">
                     <select name="table" class="custom-select mr-2" id="table" onchange="submitForm()">
-                        <option value="AcademicCredits" <?= ($_POST['table'] ?? '') === 'AcademicCredits' ? 'selected' : ''; ?>>Academic Credits</option>
-                        <option value="Building" <?= ($_POST['table'] ?? '') === 'Building' ? 'selected' : ''; ?>>Building
+                        <option value="AcademicCredits" <?= ($_POST['table'] ?? '') === 'AcademicCredits' ? 'selected' : ''; ?>>Créditos Acadêmicos</option>
+                        <option value="Building" <?= ($_POST['table'] ?? '') === 'Building' ? 'selected' : ''; ?>>Prédios
                         </option>
                         <option value="Classroom" <?= ($_POST['table'] ?? '') === 'Classroom' ? 'selected' : ''; ?>>
-                            Classroom</option>
-                        <option value="Course" <?= ($_POST['table'] ?? '') === 'Course' ? 'selected' : ''; ?>>Course
+                            Sala</option>
+                        <option value="Course" <?= ($_POST['table'] ?? '') === 'Course' ? 'selected' : ''; ?>>Curso
                         </option>
-                        <option value="CourseOfferings" <?= ($_POST['table'] ?? '') === 'CourseOfferings' ? 'selected' : ''; ?>>Course Offerings</option>
+                        <option value="CourseOfferings" <?= ($_POST['table'] ?? '') === 'CourseOfferings' ? 'selected' : ''; ?>>Disciplinas</option>
                         <option value="Department" <?= ($_POST['table'] ?? '') === 'Department' ? 'selected' : ''; ?>>
-                            Department</option>
+                            Departmento</option>
                         <option value="Enrollments" <?= ($_POST['table'] ?? '') === 'Enrollments' ? 'selected' : ''; ?>>
-                            Enrollments</option>
-                        <option value="Grade" <?= ($_POST['table'] ?? '') === 'Grade' ? 'selected' : ''; ?>>Grade</option>
+                            Inscrições</option>
+                        <option value="Grade" <?= ($_POST['table'] ?? '') === 'Grade' ? 'selected' : ''; ?>>Nota</option>
                         <option value="Instructor" <?= ($_POST['table'] ?? '') === 'Instructor' ? 'selected' : ''; ?>>
-                            Instructor</option>
-                        <option value="Student" <?= ($_POST['table'] ?? '') === 'Student' ? 'selected' : ''; ?>>Student
+                            Professor</option>
+                        <option value="Student" <?= ($_POST['table'] ?? '') === 'Student' ? 'selected' : ''; ?>>Estudante
                         </option>
                     </select>
                     <input type="submit" value="search" class="btn btn-primary">
                 </form>
 
-                <p><a href="add.php" class="btn btn-primary mt-3">Add a new record</a></p>
+                <p><a href="add.php" class="btn btn-primary mt-3">Adicionar novos itens</a></p>
             </div>
         </div>
         <?php
@@ -106,9 +106,6 @@
 
             console_log($query);
         }
-
-
-
 
         // executing the query and assigning it to $result
         $result = mysqli_query($dbc, $query);

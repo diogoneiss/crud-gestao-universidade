@@ -58,7 +58,7 @@ $result_offerings = mysqli_query($dbc, $query_offerings);
                 </select>
             </div>
 
-            <button type="submit" name="submit" class="btn btn-primary">Update Enrollment</button>
+            <button type="submit" name="submit" class="btn btn-primary">Atualizar Inscrições</button>
             <a href="index.php" class="btn btn-secondary">Cancel</a>
         </form>
     </div>

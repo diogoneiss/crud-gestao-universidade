@@ -74,7 +74,7 @@ $stmt->close();
         <input type="text" class="form-control" name="LastName" id="LastName" value="<?php echo $record['LastName']; ?>"
           required>
       </div>
-      <button type="submit" class="btn btn-primary" name="submit">Update Student</button>
+      <button type="submit" class="btn btn-primary" name="submit">Atualizar Estudante</button>
     </form>
   </div>
   <script>

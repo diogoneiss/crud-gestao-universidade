@@ -92,7 +92,7 @@ $result_classrooms = mysqli_query($dbc, $query_classrooms);
                     value="<?php echo $offering['Year']; ?>">
             </div>
 
-            <button type="submit" name="submit" class="btn btn-primary">Update Course Offering</button>
+            <button type="submit" name="submit" class="btn btn-primary">Atualizar Disciplina</button>
             <a href="index.php" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
