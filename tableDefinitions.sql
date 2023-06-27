@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`Instructor` (
   FOREIGN KEY (`DepartmentID`)
     REFERENCES `crud_project`.`Department` (`DepartmentID`)
     ON UPDATE CASCADE
-    ON DELETE CASCADE,
+    ON DELETE RESTRICT,
   FOREIGN KEY (`EmailID`)
     REFERENCES `crud_project`.`Emails` (`EmailID`)
 )
@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`CourseOfferings` (
   FOREIGN KEY (`CourseID`)
     REFERENCES `crud_project`.`Course` (`CourseID`)
     ON UPDATE CASCADE
-    ON DELETE CASCADE,
+    ON DELETE RESTRICT,
   FOREIGN KEY (`InstructorID`)
     REFERENCES `crud_project`.`Instructor` (`InstructorID`)
     ON UPDATE CASCADE
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`CourseOfferings` (
   FOREIGN KEY (`ClassroomID`)
     REFERENCES `crud_project`.`Classroom` (`ClassroomID`)
     ON UPDATE CASCADE
-    ON DELETE CASCADE
+    ON DELETE RESTRICT
   )
 AUTO_INCREMENT = 1;
     
@@ -198,9 +198,9 @@ CREATE TABLE IF NOT EXISTS `crud_project`.`Enrollments` (
   FOREIGN KEY (`StudentID`)
     REFERENCES `crud_project`.`Student` (`StudentID`)
     ON UPDATE CASCADE
-    ON DELETE CASCADE,
+    ON DELETE RESTRICT,
   FOREIGN KEY (`OfferingID`)
     REFERENCES `crud_project`.`CourseOfferings` (`OfferingID`)
     ON UPDATE CASCADE
-    ON DELETE CASCADE)
+    ON DELETE RESTRICT)
     AUTO_INCREMENT = 1;
